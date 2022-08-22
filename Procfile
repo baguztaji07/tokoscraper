@@ -1,0 +1,1 @@
+web: gunicorn tokoscraper.wsgi --log-file -

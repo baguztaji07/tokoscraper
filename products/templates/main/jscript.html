@@ -1,0 +1,50 @@
+{% load static %}
+<script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'js/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'js/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables.net-dt/js/dataTables.dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'js/datatables.net-responsive-dt/js/responsive.dataTables.min.js' %}"></script>
+<script src="{% static 'js/select2/js/select2.min.js' %}"></script>
+
+<script src="{% static 'js/dashforge.js' %}"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VGDY6CL21K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-VGDY6CL21K');
+</script>
+
+<script>
+    $('#dttokopedia').DataTable({
+        responsive: true,
+        language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+        },
+    });
+    $('#dtbukalapak').DataTable({
+        responsive: true,
+        language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+        },
+    });
+    $('#select2-category').select2({
+        minimumResultsForSearch: Infinity,
+        placeholder: 'Choose the category'
+    });
+    $('#select2-amount').select2({
+        minimumResultsForSearch: Infinity,
+        placeholder: 'Amount of data'
+    });
+    // Select2
+    $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+</script>

@@ -1,0 +1,158 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<ol class="breadcrumb df-breadcrumbs mg-b-10">
+    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+</ol>
+<h1 class="df-title">Bukalapak Scraper</h1>
+<p class="df-lead">Webscraping program to retrieve list of product data from Bukalapak and generate it into csv. The App
+    fetch product data directly from bukalapak's json and store it into datatable. You can export the data to the csv
+    file.</p>
+
+
+{% if methid == 'POST' %}
+<div class="d-flex align-items-center justify-content-center bg-ui-01">
+    <form class="wd-250 wd-sm-300 bd bd-gray-300 rounded pd-30 bg-white" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <select class="form-control" id="select2-category">
+                <option label="Pilih"></option>
+                <option value="Handphone" selected>Handphone</option>
+                <option value="TV" disabled>TV (soon)</option>
+                <option value="Tablet" disabled>Tablet (soon)</option>
+                <option value="Computer" disabled>Computer (soon)</option>
+                <option value="Shoes" disabled>Shoes (soon)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="select2-amount" name="amount">
+                <option label="Pilih"></option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Get Data</button>
+    </form>
+</div>
+<br>
+
+<div class="card mg-b-10">
+    <div class="card-header pd-t-20 d-sm-flex align-items-start justify-content-between bd-b-0 pd-b-0">
+        <div>
+            <h6 class="mg-b-5">Data-fetch Summary</h6>
+            <p class="tx-13 tx-color-03 mg-b-0">*Please note that the product order may vary from time to time</p>
+        </div>
+        <!-- <div class="d-flex mg-t-20 mg-sm-t-0">
+            <div class="btn-group flex-fill">
+                <button class="btn btn-white btn-xs active">Range</button>
+                <button class="btn btn-white btn-xs">Period</button>
+            </div>
+        </div> -->
+    </div><!-- card-header -->
+    <div class="card-body pd-y-30">
+        <div class="d-sm-flex">
+            <div class="media">
+                <div
+                    class="wd-40 wd-md-50 ht-40 ht-md-50 bg-teal tx-white mg-r-10 mg-md-r-10 d-flex align-items-center justify-content-center rounded op-6">
+                    <i data-feather="bar-chart-2"></i>
+                </div>
+                <div class="media-body">
+                    <h6
+                        class="tx-sans tx-uppercase tx-10 tx-spacing-1 tx-color-03 tx-semibold tx-nowrap mg-b-5 mg-md-b-8">
+                        Highest Price</h6>
+                    <!-- <h4 class="tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0">$1,958,104</h4> -->
+                    <h4 class="tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0">(soon)</h4>
+                </div>
+            </div>
+            <div class="media mg-t-20 mg-sm-t-0 mg-sm-l-15 mg-md-l-40">
+                <div
+                    class="wd-40 wd-md-50 ht-40 ht-md-50 bg-pink tx-white mg-r-10 mg-md-r-10 d-flex align-items-center justify-content-center rounded op-5">
+                    <i data-feather="bar-chart-2"></i>
+                </div>
+                <div class="media-body">
+                    <h6 class="tx-sans tx-uppercase tx-10 tx-spacing-1 tx-color-03 tx-semibold mg-b-5 mg-md-b-8">Lowest
+                        Price</h6>
+                    <!-- <h4 class="tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0">$234,769<small>.50</small></h4> -->
+                    <h4 class="tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0">(soon)</h4>
+                </div>
+            </div>
+            <div class="media mg-t-20 mg-sm-t-0 mg-sm-l-15 mg-md-l-40">
+                <div
+                    class="wd-40 wd-md-50 ht-40 ht-md-50 bg-primary tx-white mg-r-10 mg-md-r-10 d-flex align-items-center justify-content-center rounded op-4">
+                    <i data-feather="bar-chart-2"></i>
+                </div>
+                <div class="media-body">
+                    <h6 class="tx-sans tx-uppercase tx-10 tx-spacing-1 tx-color-03 tx-semibold mg-b-5 mg-md-b-8">
+                        Reported on</h6>
+                    <!-- <h4 class="tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0">$1,608,469<small>.50</small></h4> -->
+                    <h4 class="tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0">(soon)</h4>
+                </div>
+            </div>
+        </div>
+    </div><!-- card-body -->
+</div><!-- card -->
+
+<div data-label="Handphone" class="df-example demo-table">
+    <table id="dtbukalapak" class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Store Name</th>
+                <th>Review</th>
+                <th>Rating</th>
+                <th>URL</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pdata in pdatas %}
+            <tr>
+                <td>{{ pdata.name }}</td>
+                <td style="white-space: nowrap;">Rp {{ pdata.price }}</td>
+                <td style="white-space: nowrap;"><a href=" {{ pdata.shop.url }}" rel="nofollow"
+                        target="_blank">{{pdata.store.name}}</a></td>
+                <td>{{ pdata.rating.user_count }}</td>
+                <td>{{ pdata.rating.average_rate }}</td>
+                <td><a href="{{ pdata.url }}" rel="nofollow" target="_blank"> {{ pdata.url }}</a></td>
+                <td>{{ pdata.description }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><!-- df-example -->
+
+{% elif methid == 'GET' %}
+<div class="d-flex align-items-center justify-content-center bg-ui-01">
+    <form class="wd-250 wd-sm-300 bd bd-gray-300 rounded pd-30 bg-white" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <select class="form-control" id="select2-category">
+                <option label="Pilih"></option>
+                <option value="Handphone">Handphone</option>
+                <option value="TV" disabled>TV (soon)</option>
+                <option value="Tablet" disabled>Tablet (soon)</option>
+                <option value="Computer" disabled>Computer (soon)</option>
+                <option value="Shoes" disabled>Shoes (soon)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="select2-amount" name="amount">
+                <option label="Pilih"></option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Get Data</button>
+    </form>
+</div>
+<br>
+{% endif %}
+{% endblock %}

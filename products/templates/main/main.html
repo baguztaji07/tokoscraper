@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include 'main/header.html' %}
+</head>
+
+<body class="pos-relative" data-spy="scroll" data-target="#navSection" data-offset="120">
+    {% include 'main/navsidebar.html' %}
+    <div class="content content-components">
+        <div class="container">
+            {% block content %}
+
+            {% endblock %}
+            {% include 'main/footer.html' %}
+            <!-- container -->
+        </div>
+        <!-- content -->
+    </div>
+    {% include 'main/jscript.html' %}
+</body>
+
+</html>
