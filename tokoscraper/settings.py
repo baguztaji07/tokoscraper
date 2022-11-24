@@ -22,14 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-*og0=m0_gk0(47@)mn5irx#op#9q15*xjq+ee#o0@cv4hgu@5&'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-*og0=m0_gk0(47@)mn5irx#op#9q15*xjq+ee#o0@cv4hgu@5&'
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['tokoscraper.herokuapp.com','localhost']
-CSRF_TRUSTED_ORIGINS = ['https://tokoscraper.herokuapp.com', 'https://www.tokoscraper.herokuapp.com']
+ALLOWED_HOSTS = ['tokoscraper.bagusassusilo.com','localhost','0.0.0.0', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['tokoscraper.bagusassusilo.com']
 
 # Application definition
 
@@ -79,16 +79,16 @@ WSGI_APPLICATION = 'tokoscraper.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'tokoscraper', 
-#         'USER': 'baguztaji07', 
-#         'PASSWORD': 'Password02',
-#         'HOST': '127.0.0.1', 
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tokoscraper', 
+        'USER': 'bagusassusilo', 
+        'PASSWORD': 'Password02',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
+    }
+}
 
 DATABASES = {
     'default': {
@@ -138,7 +138,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]  # new
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/var/www/bagusassusilo/bagusassusilo/staticfiles/' #new
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 django_heroku.settings(locals())
 
